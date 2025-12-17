@@ -1,0 +1,13 @@
+my_new_project:
+  target: dev
+  outputs:
+    dev:
+      account : LQXIYJI-SI69879
+      user : VAMSISNOWFLAKE
+      database : ASCENDION
+      password : Vamsi@snowflake1
+      type: snowflake
+      role: ACCOUNTADMIN
+      warehouse: COMPUTE_WH
+      schema: BRONZE
+      threads : 1
