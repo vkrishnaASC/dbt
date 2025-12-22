@@ -21,7 +21,6 @@ models:
   my_new_project:
     # This ensures that by default, models go to the target schema 
     # (STAGING or PROD) defined in your dbt Cloud environment
-    +schema: "{{ target.schema }}" 
     
     bronze:
       +materialized: table
