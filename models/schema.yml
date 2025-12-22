@@ -20,5 +20,3 @@ models:
   - name: dim_customer_revenue
     description: "Gold layer: Final customer revenue metrics."
     
-tests:
-  severity: warn  # Ensures the job continues even if a test fails
