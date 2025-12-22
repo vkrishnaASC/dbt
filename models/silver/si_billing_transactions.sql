@@ -2,10 +2,13 @@
     materialized='table'
 ) }}
 
-with unique_transactions as (
-    -- Deduplication logic
+  with unique_transactions as (
     select *,
-           row_number() over (partition by transaction_id order by event_date desc) as rn
+           -- We partition by everything EXCEPT the ID to find identical rows
+           row_number() over (
+               partition by customer_id, event_date, plan_name, amount 
+               order by transaction_id asc
+           ) as rn
     from {{ ref('bz_billing_transactions') }}
 )
 select
