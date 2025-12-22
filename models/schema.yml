@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: bz_billing_transactions
+    description: "Raw billing data with basic type casting."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+  - name: si_billing_transactions
+    description: "Cleaned and deduplicated billing events."
+    columns:
+      - name: event_type
+        tests:
+          - accepted_values:
+              values: ['SUBSCRIPTION_START', 'UPGRADE', 'REFUND']
+
+  - name: dim_customer_revenue
+    description: "Gold layer: Final customer revenue metrics."
+    tests:
+      - test_overcharge: # This calls your custom test file
+          severity: warn   # Ensures the job continues even if a test fails
