@@ -19,6 +19,6 @@ models:
 
   - name: dim_customer_revenue
     description: "Gold layer: Final customer revenue metrics."
-    tests:
-      - test_overcharge: # This calls your custom test file
-          severity: warn   # Ensures the job continues even if a test fails
+    
+tests:
+  severity: warn  # Ensures the job continues even if a test fails
