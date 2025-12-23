@@ -4,11 +4,9 @@
 {{ config(
     materialized='incremental',
     schema='staging',
-    unique_key='transaction_id'  -- Assuming transaction_id is unique
 ) }}
 
-select 
-    transaction_id,
+select
     customer_id,
     plan_name,
     amount,
