@@ -2,10 +2,10 @@
 
 SELECT 
     customer_id,
-    plan_type,
+    current_plan,
     net_lifetime_revenue
 FROM {{ ref('fact_customer_revenue') }}  -- Replace with actual model name
 WHERE 
-    UPPER(plan_type) = 'BASIC'
+    UPPER(current_plan) = 'BASIC'
     AND net_lifetime_revenue > 50
 HAVING COUNT(*) = 0  -- Test fails if any rows are found
