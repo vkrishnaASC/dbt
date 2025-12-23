@@ -9,7 +9,7 @@ models:
           - unique
           - not_null
           - test_overcharge:
-            severity : warn
+              severity : warn
 
   - name: si_billing_transactions
     description: "Cleaned and deduplicated billing events."
