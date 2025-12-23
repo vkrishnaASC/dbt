@@ -4,10 +4,10 @@
 SELECT 
     customer_id,
     current_plan,
-    net_lifetime_revenue
+    total_revenue
 FROM {{ ref('fact_customer_revenue') }}
 WHERE 
     UPPER(current_plan) = 'BASIC'
-    AND net_lifetime_revenue > 50
+    AND total_revenue > 50
 ORDER BY 
-    net_lifetime_revenue DESC
+    total_revenue DESC
