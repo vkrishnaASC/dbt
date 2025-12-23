@@ -21,13 +21,8 @@ models:
   my_new_project:
     # This ensures that by default, models go to the target schema 
     # (STAGING or PROD) defined in your dbt Cloud environment
-    
-    bronze:
-      +materialized: table
-    silver:
-      +materialized: table
-    gold:
-      +materialized: table
+    +materialized: table
+
 
 tests:
   +severity: warn # Global default: warn instead of fail
