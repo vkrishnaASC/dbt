@@ -13,7 +13,7 @@ cleaned_data as (
         upper(plan_name) as plan_name,
         amount::decimal(10,2) as amount
     from raw_data
-)
+) 
 
 -- Step 2: Final Aggregation for the Client
 select 
