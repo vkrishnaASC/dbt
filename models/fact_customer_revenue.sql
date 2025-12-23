@@ -13,7 +13,6 @@ cleaned_data as (
         upper(plan_name) as plan_name,
         amount::decimal(10,2) as amount
     from raw_data
-    where transaction_id not in (select transaction_id from quarantine)
 )
 
 -- Step 2: Final Aggregation for the Client
