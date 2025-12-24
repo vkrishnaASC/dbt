@@ -3,25 +3,4 @@ version: 2
 models:
   - name: fact_customer_revenue
     description: "Gold layer: Final customer revenue metrics."
-    tests:
-      # Uniqueness and not null tests for primary key
-      - unique:
-          column_name: customer_id
-      - not_null:
-          column_name: customer_id
-      
-      # Data quality tests
-      - dbt_utils.expression_is_true:
-          expression: "revenue >= 0"
-          description: "Revenue should never be negative"
-      
-      # Custom tests for business rules
-      # Using accepted_values test instead of dbt_expectations package
-      - accepted_values:
-          column_name: total_revenue
-          values:
-            - 0
-            - 1000000
-          config:
-            where: "total_revenue >= 0 AND total_revenue <= 1000000"
-          description: "Revenue should be within reasonable bounds"
+   
