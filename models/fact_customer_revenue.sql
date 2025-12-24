@@ -4,15 +4,6 @@ with raw_data as (
     select * from {{ ref('raw_billing_transactions') }}
 ),
 
-cleaned_data as (
-    select *
-    from raw_data
-    -- The Resolution: Filter out any IDs caught in our Quarantine Model
-    where transaction_id not in (
-        select transaction_id from {{ ref('quarantine_log') }}
-    )
-)
-
 select 
     customer_id,
     max(plan_name) as current_plan,
