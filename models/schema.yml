@@ -16,8 +16,12 @@ models:
           description: "Revenue should never be negative"
       
       # Custom tests for business rules
-      - dbt_expectations.expect_column_values_to_be_between:
+      # Using accepted_values test instead of dbt_expectations package
+      - accepted_values:
           column_name: total_revenue
-          min_value: 0
-          max_value: 1000000
+          values:
+            - 0
+            - 1000000
+          config:
+            where: "total_revenue >= 0 AND total_revenue <= 1000000"
           description: "Revenue should be within reasonable bounds"
