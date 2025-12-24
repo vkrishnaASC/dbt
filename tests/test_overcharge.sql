@@ -1,6 +1,6 @@
 {# Note: For improved responses about models, sources, and DAG relationships, please compile your DBT project first. #}
 
--- fact_customer_revenue_basic_plan_revenue_check.sql
+-- Test to identify BASIC plan customers with revenue > $50
 SELECT 
     customer_id,
     current_plan,
