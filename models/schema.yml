@@ -3,4 +3,4 @@ version: 2
 models:
   - name: fact_customer_revenue
     description: "Gold layer: Final customer revenue metrics."
-    
+   
