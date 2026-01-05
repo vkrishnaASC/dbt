@@ -1,17 +1,24 @@
+version: 2
+
 semantic_models:
+  # 1. TIME SPINE MODEL
+  # Essential for time-series calculations in Tableau
   - name: metricflow_time_spine
     model: ref('metricflow_time_spine')
-    entities:
-      - name: date_day
-        type: primary
+    defaults:
+      agg_time_dimension: date_day
     dimensions:
       - name: date_day
         type: time
         type_params:
           time_granularity: day
-          
+
+  # 2. SUBSCRIPTION FACT TABLE
   - name: subscription_metrics
     model: ref('fct_subscription_transactions')
+    # This 'defaults' block fixes the "AssertionError" for measures
+    defaults:
+      agg_time_dimension: event_date
     entities:
       - name: transaction
         type: primary
@@ -39,6 +46,7 @@ semantic_models:
         expr: transaction_id
 
 metrics:
+  # Metric visible in Tableau for financial reporting
   - name: revenue
     description: "Total net revenue (Sales - Refunds)"
     type: simple
@@ -46,11 +54,12 @@ metrics:
       measure: total_amount
     label: "Net Revenue"
 
+  # Filtered metric using updated MetricFlow syntax
   - name: subscription_starts
     description: "Count of new subscription events"
     type: simple
     type_params:
       measure: transaction_count
     filter: |
-      {{ dimension('event_type') }} = 'SUBSCRIPTION_START'
+      {{ Dimension('transaction__event_type') }} == 'SUBSCRIPTION_START'
     label: "New Signups"
