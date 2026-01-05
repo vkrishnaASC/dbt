@@ -2,10 +2,28 @@ version: 2
 
 models:
   - name: fct_subscription_transactions
-    description: "Gold layer: fact table."
-    
+    description: "Gold layer: central fact table for all subscription events."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
   - name: dim_customers
-    description: "Customers Dim Table"
+    description: "Dimensions for customer attributes."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
 
   - name: dim_plans
-    description: "Plans Dim Table"
+    description: "Subscription plan lookup table."
+
+  - name: metricflow_time_spine
+    description: "Mandatory daily backbone for the dbt Semantic Layer."
+    columns:
+      - name: date_day
+        tests:
+          - unique
+          - not_null

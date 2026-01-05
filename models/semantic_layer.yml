@@ -1,4 +1,15 @@
 semantic_models:
+  - name: metricflow_time_spine
+    model: ref('metricflow_time_spine')
+    entities:
+      - name: date_day
+        type: primary
+    dimensions:
+      - name: date_day
+        type: time
+        type_params:
+          time_granularity: day
+          
   - name: subscription_metrics
     model: ref('fct_subscription_transactions')
     entities:
