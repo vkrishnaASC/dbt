@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 with raw_data as (
-    select * from {{ ref('stg_transactions') }} -- Assuming your raw data is in a staging model
+    select * from {{ ref('raw_billing_transactions') }} -- Assuming your raw data is in a staging model
 ),
 final as (
     select
