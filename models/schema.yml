@@ -1,6 +1,11 @@
 version: 2
 
 models:
-  - name: fact_customer_revenue
-    description: "Gold layer: Final customer revenue metrics."
-   
+  - name: fct_subscription_transactions
+    description: "Gold layer: fact table."
+    
+  - name: dim_customers
+    description: "Customers Dim Table"
+
+  - name: dim_plans
+    description: "Plans Dim Table"
