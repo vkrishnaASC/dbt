@@ -1,0 +1,45 @@
+semantic_models:
+  - name: subscription_metrics
+    model: ref('fct_subscription_transactions')
+    entities:
+      - name: transaction
+        type: primary
+        expr: transaction_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+    dimensions:
+      - name: event_date
+        type: time
+        type_params:
+          time_granularity: day
+      - name: plan_name
+        type: categorical
+      - name: event_type
+        type: categorical
+    measures:
+      - name: total_amount
+        description: "The total sum of all transaction amounts"
+        agg: sum
+        expr: amount
+      - name: transaction_count
+        description: "Total number of transactions"
+        agg: count
+        expr: transaction_id
+
+metrics:
+  - name: revenue
+    description: "Total net revenue (Sales - Refunds)"
+    type: simple
+    type_params:
+      measure: total_amount
+    label: "Net Revenue"
+
+  - name: subscription_starts
+    description: "Count of new subscription events"
+    type: simple
+    type_params:
+      measure: transaction_count
+    filter: |
+      {{ dimension('event_type') }} = 'SUBSCRIPTION_START'
+    label: "New Signups"
