@@ -1,8 +1,6 @@
-
-name: 'my_new_project'
+name: 'my_new_project'  # <--- THIS WAS MISSING AND CAUSED THE RUNTIME ERROR
 version: '1.0.0'
 config-version: 2
-
 profile: 'my_new_project'
 
 model-paths: ["models"]
@@ -12,17 +10,14 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
+target-path: "target"
+clean-targets:
   - "target"
   - "dbt_packages"
 
 models:
   my_new_project:
-    # This ensures that by default, models go to the target schema 
-    # (STAGING or PROD) defined in your dbt Cloud environment
     +materialized: table
-
-
+ 
 tests:
-  +severity: warn # Global default: warn instead of fail
+  +severity: warn

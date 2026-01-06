@@ -1,11 +1,24 @@
 version: 2
 
 models:
-  - name: fct_subscription_transactions
-    description: "Gold layer: fact table."
-    
-  - name: dim_customers
-    description: "Customers Dim Table"
+  - name: stg_billing_transactions
+    description: "Staging: Raw billing events."
+  
+  - name: stg_customers
+    description: "Staging: Customer history from snapshot."
 
-  - name: dim_plans
-    description: "Plans Dim Table"
+  - name: fct_subscription_transactions
+    description: "Gold layer: central fact table."
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_customers
+    description: "Dimensions for customer attributes."
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null

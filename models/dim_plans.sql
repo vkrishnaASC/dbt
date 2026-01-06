@@ -7,4 +7,4 @@ select distinct
         when plan_name = 'PRO' then 'Professional'
         when plan_name = 'PREMIUM' then 'Enterprise'
     end as plan_tier
-from {{ ref('stg_transactions') }}
+from {{ ref('raw_billing_transactions') }}

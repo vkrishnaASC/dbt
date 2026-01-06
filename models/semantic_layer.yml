@@ -1,6 +1,24 @@
+version: 2
+
 semantic_models:
+  - name: metricflow_time_spine
+    model: ref('metricflow_time_spine')
+    defaults:
+      agg_time_dimension: date_day
+    entities:
+      - name: date_spine_id
+        type: primary
+        expr: date_day
+    dimensions:
+      - name: date_day
+        type: time
+        type_params:
+          time_granularity: day
+
   - name: subscription_metrics
     model: ref('fct_subscription_transactions')
+    defaults:
+      agg_time_dimension: event_date
     entities:
       - name: transaction
         type: primary
@@ -19,27 +37,23 @@ semantic_models:
         type: categorical
     measures:
       - name: total_amount
-        description: "The total sum of all transaction amounts"
         agg: sum
         expr: amount
       - name: transaction_count
-        description: "Total number of transactions"
         agg: count
         expr: transaction_id
 
 metrics:
   - name: revenue
-    description: "Total net revenue (Sales - Refunds)"
     type: simple
     type_params:
       measure: total_amount
     label: "Net Revenue"
 
   - name: subscription_starts
-    description: "Count of new subscription events"
     type: simple
     type_params:
       measure: transaction_count
     filter: |
-      {{ dimension('event_type') }} = 'SUBSCRIPTION_START'
+      {{ Dimension('transaction__event_type') }} == 'SUBSCRIPTION_START'
     label: "New Signups"
