@@ -1,14 +1,8 @@
 {{ config(materialized='table') }}
 
-with raw_data as (
-    select * from {{ ref('raw_billing_transactions') }} -- Assuming your raw data is in a staging model
-),
-final as (
-    select
-        customer_id,
-        min(event_date) as first_seen_at,
-        count(transaction_id) as total_events_to_date
-    from raw_data
-    group by 1
-)
-select * from final
+select
+    customer_id,
+    plan_name as current_plan,
+    min(start_at) over (partition by customer_id) as first_seen_at
+from {{ ref('stg_customers') }}
+where is_current = true

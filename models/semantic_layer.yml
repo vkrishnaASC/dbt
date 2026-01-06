@@ -6,11 +6,11 @@ semantic_models:
     defaults:
       agg_time_dimension: date_day
     entities:
-      - name: date_spine_id  # <--- RENAME THIS (was date_day)
+      - name: date_spine_id
         type: primary
-        expr: date_day       # <--- Point it to the actual column
+        expr: date_day
     dimensions:
-      - name: date_day       # <--- Keep this as is
+      - name: date_day
         type: time
         type_params:
           time_granularity: day
