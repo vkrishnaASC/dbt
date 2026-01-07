@@ -1,59 +1,36 @@
 version: 2
-
 semantic_models:
-  - name: metricflow_time_spine
-    model: ref('metricflow_time_spine')
+  - name: enrollment_metrics
+    model: ref('fct_enrollments')
     defaults:
-      agg_time_dimension: date_day
+      agg_time_dimension: enrollment_date
     entities:
-      - name: date_spine_id
+      - name: student
         type: primary
-        expr: date_day
+        expr: student_id
     dimensions:
-      - name: date_day
+      - name: enrollment_date
         type: time
         type_params:
           time_granularity: day
-
-  - name: subscription_metrics
-    model: ref('fct_subscription_transactions')
-    defaults:
-      agg_time_dimension: event_date
-    entities:
-      - name: transaction
-        type: primary
-        expr: transaction_id
-      - name: customer
-        type: foreign
-        expr: customer_id
-    dimensions:
-      - name: event_date
-        type: time
-        type_params:
-          time_granularity: day
-      - name: plan_name
-        type: categorical
-      - name: event_type
+      - name: major_at_enrollment
         type: categorical
     measures:
-      - name: total_amount
+      - name: total_credits
         agg: sum
-        expr: amount
-      - name: transaction_count
-        agg: count
-        expr: transaction_id
+        expr: credits
+      - name: student_count
+        agg: count_distinct
+        expr: student_id
 
 metrics:
-  - name: revenue
+  - name: credit_load
+    label: "Total Credits Generated"
     type: simple
     type_params:
-      measure: total_amount
-    label: "Net Revenue"
-
-  - name: subscription_starts
+      measure: total_credits
+  - name: unique_students
+    label: "Active Student Count"
     type: simple
     type_params:
-      measure: transaction_count
-    filter: |
-      {{ Dimension('transaction__event_type') }} == 'SUBSCRIPTION_START'
-    label: "New Signups"
+      measure: student_count
