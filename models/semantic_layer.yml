@@ -1,4 +1,11 @@
 version: 2
+
+# This section clears the 'Time Spine' warning
+models:
+  - name: metricflow_time_spine
+    config:
+      metricflow_time_spine: true
+
 semantic_models:
   - name: enrollment_star
     model: ref('fct_enrollments')
@@ -6,8 +13,11 @@ semantic_models:
       agg_time_dimension: enrollment_date
     entities:
       - name: student
-        type: primary
+        type: primary  # Only ONE can be primary
         expr: student_id
+      - name: course
+        type: unique   # Changed from primary to unique
+        expr: course_id
     dimensions:
       - name: enrollment_date
         type: time
@@ -21,10 +31,7 @@ semantic_models:
       - name: total_credits
         agg: sum
         expr: credits
-      - name: enrollment_count
-        agg: count
-        expr: student_id
-      - name: distinct_student_measure
+      - name: student_headcount_measure
         agg: count_distinct
         expr: student_id
 
@@ -39,15 +46,13 @@ metrics:
     label: "Unique Students"
     type: simple
     type_params:
-      measure: distinct_student_measure
+      measure: student_headcount_measure
 
   - name: avg_credits_per_student
     label: "Avg Credits per Student"
     type: derived
     type_params:
-      # We reference the NAMES of the metrics defined above
       expr: university_credit_load / student_headcount
       metrics:
         - name: university_credit_load
         - name: student_headcount
-
