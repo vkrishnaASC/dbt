@@ -1,0 +1,14 @@
+version: 2
+models:
+  - name: dim_students
+    columns:
+      - name: student_id
+        tests:
+          - unique
+          - not_null
+  - name: fct_enrollments
+    columns:
+      - name: student_id
+        tests:
+          - not_null  # Ensures every enrollment is tied to a student
+          

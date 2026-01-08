@@ -1,8 +1,19 @@
+with enrollment_data as (
+    select * from {{ ref('stg_enrollments') }}
+),
+students as (
+    select * from {{ ref('dim_students') }}
+),
+courses as (
+    select * from {{ ref('dim_courses') }}
+)
 select
-    e.*,
-    s.major as major_at_enrollment
-from {{ ref('stg_enrollments') }} e
-left join {{ ref('student_history') }} s
-    on e.student_id = s.student_id
-    and e.enrollment_date >= s.dbt_valid_from
-    and (e.enrollment_date < s.dbt_valid_to or s.dbt_valid_to is null)
+    e.student_id,
+    e.course_id,
+    e.enrollment_date,
+    e.credits,
+    s.current_major,        -- Sourced from dim_students
+    c.course_category       -- Sourced from dim_courses
+from enrollment_data e
+left join students s on e.student_id = s.student_id
+left join courses c on e.course_id = c.course_id

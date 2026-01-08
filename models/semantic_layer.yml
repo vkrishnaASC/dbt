@@ -1,6 +1,6 @@
 version: 2
 semantic_models:
-  - name: enrollment_metrics
+  - name: enrollment_star
     model: ref('fct_enrollments')
     defaults:
       agg_time_dimension: enrollment_date
@@ -13,24 +13,41 @@ semantic_models:
         type: time
         type_params:
           time_granularity: day
-      - name: major_at_enrollment
+      - name: current_major
+        type: categorical
+      - name: course_category
         type: categorical
     measures:
       - name: total_credits
         agg: sum
         expr: credits
-      - name: student_count
+      - name: enrollment_count
+        agg: count
+        expr: student_id
+      - name: distinct_student_measure
         agg: count_distinct
         expr: student_id
 
 metrics:
-  - name: credit_load
-    label: "Total Credits Generated"
+  - name: university_credit_load
+    label: "Total Credits"
     type: simple
     type_params:
       measure: total_credits
-  - name: unique_students
-    label: "Active Student Count"
+
+  - name: student_headcount
+    label: "Unique Students"
     type: simple
     type_params:
-      measure: student_count
+      measure: distinct_student_measure
+
+  - name: avg_credits_per_student
+    label: "Avg Credits per Student"
+    type: derived
+    type_params:
+      # We reference the NAMES of the metrics defined above
+      expr: university_credit_load / student_headcount
+      metrics:
+        - name: university_credit_load
+        - name: student_headcount
+
