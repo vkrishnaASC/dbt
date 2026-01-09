@@ -1,12 +1,26 @@
 version: 2
 models:
+  - name: stg_enrollments
+    description: "staging"
+    columns:
+      - name: student_id
+      - name: course_id
+      - name: enrollment_date
   - name: dim_students
+    description: "dimension model of students and their current major"
     columns:
       - name: student_id
         tests:
           - unique
           - not_null
+  - name: dim_date
+    description: "dimension date / calender"
+  - name: dim_student_enrollment
+    description: "dimension for students enrollments date"
+  - name: dim_course
+    description: "dimension of courses"
   - name: fct_enrollments
+    description: "Fact Model of Enrollments"
     columns:
       - name: student_id
         tests:
