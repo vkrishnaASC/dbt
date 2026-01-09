@@ -1,0 +1,27 @@
+version: 2
+
+exposures:
+  - name: dbt_tableau
+    label: "DBT Teableau"
+    type: dashboard
+    maturity: high
+    url: https://prod-in-a.online.tableau.com/#/site/palukurisathya06-801357c61e/workbooks/355534/views
+    owner:
+      name: Vamsi Krishna
+      email: palukurisathya06@gmail.com
+    depends_on:
+      # Use the ref() syntax as a string
+      - metric('university_credit_load')
+      - metric('student_headcount')
+
+  - name: student_avg_credits
+    label: "Student Avg Credits Dashboard"
+    type: dashboard
+    maturity: high
+    url: https://prod-in-a.online.tableau.com/#/site/palukurisathya06-801357c61e/workbooks/357113/views
+    owner:
+      name: Vamsi Krishna
+      email: palukurisathya06@gmail.com
+    depends_on:
+      # Use the ref() syntax as a string
+      - metric('avg_credits_per_student')

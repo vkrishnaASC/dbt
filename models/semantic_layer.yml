@@ -1,10 +1,10 @@
 version: 2
 
-# This section clears the 'Time Spine' warning
 models:
   - name: metricflow_time_spine
     config:
-      metricflow_time_spine: true
+      meta:
+        metricflow_time_spine: true
 
 semantic_models:
   - name: enrollment_star
