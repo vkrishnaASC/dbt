@@ -2,7 +2,7 @@ with calendar as (
     select * from {{ ref('dim_date') }}
 ),
 enrollment_data as (
-    select * from {{ ref('dim_enrollment_date') }}
+    select * from {{ ref('dim_student_enrollment') }}
 ),
 students as (
     select * from {{ ref('dim_students') }}
