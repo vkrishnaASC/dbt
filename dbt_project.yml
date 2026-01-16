@@ -16,7 +16,7 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  materialized: tables
+  +materialized: tables
   your_project_name:
     test_models:
       #For all three models
