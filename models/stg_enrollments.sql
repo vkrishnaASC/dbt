@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 select
     student_id,
     course_id,

@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 select
   1 as order_id,
   'T1' as tenant_id,

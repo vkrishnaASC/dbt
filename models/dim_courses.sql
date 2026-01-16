@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 select distinct
     course_id,
     course_name,

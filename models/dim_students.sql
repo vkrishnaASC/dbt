@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 select
     student_id,
     major as current_major,

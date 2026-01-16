@@ -1,3 +1,4 @@
+{{ config(materialized='table') }}
 -- This model bridges our staging data to the fact table
 select
     student_id,

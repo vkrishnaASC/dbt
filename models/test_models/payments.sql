@@ -1,3 +1,5 @@
+{{ config(materialized='table') }}
+
 select
   10 as payment_id,
   'T1' as tenant_id,
