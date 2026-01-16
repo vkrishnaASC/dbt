@@ -23,11 +23,11 @@ models:
       #  created_at not_null (from dbt_project.yml)
       +columns:
         tenant_id:
-          tests:
+          +tests:
             - not_null
 
         created_at:
-          tests:
+          +tests:
             - not_null
 
 tests:

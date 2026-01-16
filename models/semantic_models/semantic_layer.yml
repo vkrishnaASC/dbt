@@ -31,11 +31,12 @@ semantic_models:
       - name: total_credits
         agg: sum
         expr: credits
-      - name: student_headcount_measure
+      - name: student_count
         agg: count_distinct
         expr: student_id
 
 metrics:
+  # 1. SIMPLE METRICS (Define these first so others can use them)
   - name: university_credit_load
     label: "Total Credits"
     type: simple
@@ -46,8 +47,26 @@ metrics:
     label: "Unique Students"
     type: simple
     type_params:
-      measure: student_headcount_measure
+      measure: student_count
 
+  # 2. RATIO METRIC (Now referencing the METRIC names above)
+  - name: credits_per_student_ratio
+    label: "Complexity: Ratio Calculation"
+    type: ratio
+    type_params:
+      numerator: university_credit_load    # Changed from total_credits
+      denominator: student_headcount      # Changed from student_count
+
+  # 3. FILTERED METRIC
+  - name: stem_student_credits
+    label: "Complexity: Filtered Metric"
+    type: simple
+    type_params:
+      measure: total_credits
+    filter: |
+      {{ Dimension('student__current_major') }} IN ('Computer Science', 'Engineering', 'Mathematics')
+
+  # 4. DERIVED METRIC
   - name: avg_credits_per_student
     label: "Avg Credits per Student"
     type: derived
