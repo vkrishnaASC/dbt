@@ -1,6 +1,6 @@
-student_id,name,course_id,department,credits,enrollment_date,major
-S01,Alice,CS101,Engineering,4,2024-09-01,Undeclared
-S01,Alice,CS102,Engineering,4,2025-01-10,Computer Science
-S02,Bob,BIO101,Science,3,2024-09-01,Biology
-S03,Charlie,MATH101,Science,5,2024-09-05,Mathematics
-S01,Alice,CS103,Engineering,4,2025-01-10,Computer Science
+student_id,name,course_id,course_name,credits,enrollment_date,major
+S01,Alice,CS101,Intro to CS,4,2024-09-01,Undeclared
+S01,Alice,CS102,Data Structures,4,2025-01-10,Computer Science
+S02,Bob,BIO101,Biology 1,3,2024-09-01,Biology
+S03,Charlie,MATH101,Calculus,5,2024-09-05,Mathematics
+S04,David,ENG101,Literature,3,2024-09-10,English

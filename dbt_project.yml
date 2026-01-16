@@ -16,8 +16,19 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  my_new_project:
-    +materialized: table
+  your_project_name:
+    test_models:
+    #For all three models
+#  tenant_id not_null (from dbt_project.yml)
+#  created_at not_null (from dbt_project.yml)
+      +columns:
+        tenant_id:
+          tests:
+            - not_null
+
+        created_at:
+          tests:
+            - not_null
  
 tests:
   +severity: warn
