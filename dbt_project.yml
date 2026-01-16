@@ -16,8 +16,8 @@ clean-targets:
   - "dbt_packages"
 
 models:
-  +materialized: tables
   your_project_name:
+    +materialized: tables
     test_models:
       #For all three models
       #  tenant_id not_null (from dbt_project.yml)
