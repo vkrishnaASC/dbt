@@ -1,5 +1,59 @@
 version: 2
+
 models:
+  - name: orders
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: order_amount
+        data_tests:
+          - not_negative
+
+      - name: status
+        data_tests:
+          - accepted_values:
+              values: ['COMPLETED', 'CANCELLED']
+
+      - name: tenant_id
+        data_tests:
+          - not_null
+
+      - name: created_at
+        data_tests:
+          - not_null
+
+  - name: payments
+    columns:
+      - name: payment_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: payment_amount
+        data_tests:
+          - not_negative
+
+      - name: payment_status
+        data_tests:
+          - accepted_values:
+              values: ['SUCCESS', 'FAILED']
+
+  - name: customers
+    columns:
+      - name: customer_id
+        data_tests:
+          - not_null
+          - unique
+
+      - name: customer_status
+        data_tests:
+          - accepted_values:
+              values: ['ACTIVE', 'INACTIVE']
+
+# Semantic models for DEMO
   - name: stg_enrollments
     description: "staging"
     columns:
@@ -10,7 +64,7 @@ models:
     description: "dimension model of students and their current major"
     columns:
       - name: student_id
-        tests:
+        data_tests:
           - unique
           - not_null
   - name: dim_date
@@ -23,6 +77,5 @@ models:
     description: "Fact Model of Enrollments"
     columns:
       - name: student_id
-        tests:
+        data_tests:
           - not_null  # Ensures every enrollment is tied to a student
-          

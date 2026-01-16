@@ -2,7 +2,7 @@ version: 2
 
 exposures:
   - name: dbt_tableau
-    label: "DBT Teableau"
+    label: "DBT Tableau"
     type: dashboard
     maturity: high
     url: https://prod-in-a.online.tableau.com/#/site/palukurisathya06-801357c61e/workbooks/355534/views
