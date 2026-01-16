@@ -1,7 +1,7 @@
-name: 'my_new_project'  # <--- THIS WAS MISSING AND CAUSED THE RUNTIME ERROR
-version: '1.0.0'
+name: "my_new_project" # <--- THIS WAS MISSING AND CAUSED THE RUNTIME ERROR
+version: "1.0.0"
 config-version: 2
-profile: 'my_new_project'
+profile: "my_new_project"
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
@@ -19,9 +19,9 @@ models:
   materialized: tables
   your_project_name:
     test_models:
-    #For all three models
-#  tenant_id not_null (from dbt_project.yml)
-#  created_at not_null (from dbt_project.yml)
+      #For all three models
+      #  tenant_id not_null (from dbt_project.yml)
+      #  created_at not_null (from dbt_project.yml)
       +columns:
         tenant_id:
           tests:
@@ -30,6 +30,6 @@ models:
         created_at:
           tests:
             - not_null
- 
+
 tests:
   +severity: warn
