@@ -7,6 +7,36 @@ models:
         metricflow_time_spine: true
 
 semantic_models:
+  - name: lineitem_600m
+    model: ref('stg_lineitem')
+      # ADD THIS: Tells dbt which time dimension to use by default for measures
+    defaults:
+      agg_time_dimension: ship_date 
+    entities:
+      - name: lineitem_id
+        type: primary
+        expr: concat(l_orderkey, '-', l_linenumber)
+    dimensions:
+        # ADD THIS: Define the actual time dimension
+        - name: ship_date
+          type: time
+          expr: l_shipdate
+          type_params:
+            time_granularity: day
+        - name: shipping_mode
+          type: categorical
+          expr: l_shipmode
+        - name: return_flag
+          type: categorical
+          expr: l_returnflag
+    measures:
+        - name: total_tax
+          agg: sum
+          expr: l_tax
+        - name: total_price
+          agg: sum
+          expr: l_extendedprice
+
   - name: enrollment_star
     model: ref('fct_enrollments')
     defaults:
@@ -75,3 +105,22 @@ metrics:
       metrics:
         - name: university_credit_load
         - name: student_headcount
+
+#Big data table metrics
+  - name: total_tax
+    label: "total tax"
+    type: simple
+    type_params:
+      measure: total_tax
+  - name: total_price
+    label: "total price"
+    type: simple
+    type_params:
+      measure: total_price
+  - name: tax_efficiency_ratio
+    type: ratio
+    label: "Tax Efficiency (600M Rows)"
+    type_params:
+      numerator: total_tax
+      denominator: total_price
+
